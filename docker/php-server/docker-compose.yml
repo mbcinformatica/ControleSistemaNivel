@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+
+  web:
+    image: php:8.1-apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./index.php:/var/www/html/index.php
+      - ./phpinfo.php:/var/www/html/phpinfo.php
+      - ./api.php:/var/www/html/api.php
+      - ./listar_dispositivos.php:/var/www/html/listar_dispositivos.php
+      - ./cadastrar_dispositivos.php:/var/www/html/cadastrar_dispositivos.php
+      - ./alterar_dispositivos.php:/var/www/html/alterar_dispositivos.php
+      - /home/mbc/docker/php-server/log:/var/log/apache2  # Adicionando logs para PHP
+      - /etc/localtime:/etc/localtime:ro
+    command: bash -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf && docker-php-ext-install mysqli && apache2-foreground"
+

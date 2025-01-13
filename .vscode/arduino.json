@@ -1,0 +1,7 @@
+{
+    "board": "arduino:avr:uno",
+    "programmer": "avrisp",
+    "output": ".arduino/output",
+    "sketch": ".pio/libdeps/esp12f/WiFiManager/examples/Advanced/Advanced.ino",
+    "port": "COM3"
+}

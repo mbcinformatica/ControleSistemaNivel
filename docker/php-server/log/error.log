@@ -1,0 +1,16 @@
+[Mon Jan 13 01:32:19.689658 2025] [mpm_prefork:notice] [pid 1:tid 1] AH00163: Apache/2.4.62 (Debian) PHP/8.1.31 configured -- resuming normal operations
+[Mon Jan 13 01:32:19.689704 2025] [core:notice] [pid 1:tid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon Jan 13 01:32:20.866441 2025] [php:notice] [pid 3281:tid 3281] [client 192.168.1.22:61626] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:32:31.194108 2025] [php:notice] [pid 3282:tid 3282] [client 192.168.1.22:57737] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:32:41.421026 2025] [php:notice] [pid 3283:tid 3283] [client 192.168.1.22:50385] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:32:51.641925 2025] [php:notice] [pid 3284:tid 3284] [client 192.168.1.22:52337] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:33:01.917125 2025] [php:notice] [pid 3285:tid 3285] [client 192.168.1.22:52582] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:33:12.140184 2025] [php:notice] [pid 3281:tid 3281] [client 192.168.1.22:57866] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:33:22.427651 2025] [php:notice] [pid 3282:tid 3282] [client 192.168.1.22:61280] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:33:32.842718 2025] [php:notice] [pid 3283:tid 3283] [client 192.168.1.22:59549] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:33:43.016649 2025] [php:notice] [pid 3284:tid 3284] [client 192.168.1.22:58997] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:33:53.459144 2025] [php:notice] [pid 3285:tid 3285] [client 192.168.1.22:55825] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:34:03.967564 2025] [php:notice] [pid 3281:tid 3281] [client 192.168.1.22:59935] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:34:14.250313 2025] [php:notice] [pid 3282:tid 3282] [client 192.168.1.22:58734] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:34:27.295593 2025] [php:notice] [pid 3283:tid 3283] [client 192.168.1.22:52637] identifier: sensor_nivel, valor: 6.00
+[Mon Jan 13 01:34:37.714566 2025] [php:notice] [pid 3284:tid 3284] [client 192.168.1.22:54887] identifier: sensor_nivel, valor: 6.00

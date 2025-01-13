@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '3306:3306'
+    volumes:
+      - /home/mbc/docker/mysql/data:/var/lib/mysql
+      - /home/mbc/docker/mysql/log:/var/log/mysql
+      - /etc/localtime:/etc/localtime:ro
+
