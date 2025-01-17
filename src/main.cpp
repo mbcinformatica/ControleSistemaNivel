@@ -8,11 +8,13 @@
 #include <ArduinoJson.h>
 #include <Ultrasonic.h>
 #include <neotimer.h>
-#include <device.h>
-#include <sensor.h>
+
 
 WiFiClient wifiClient;
 char *site_url = "http://192.168.1.198:8080/api.php";
+
+#include <device.h>
+#include <sensor.h>
 
 IPAddress staticIP(192, 168, 1, 22);
 IPAddress gateway(192, 168, 1, 100);

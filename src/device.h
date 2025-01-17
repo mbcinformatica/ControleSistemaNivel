@@ -1,5 +1,6 @@
 #include <ArduinoJson.h> // Inclui a biblioteca ArduinoJson para manipulação de JSON
 
+
 // Estrutura para armazenar informações dos dispositivos
 struct Device
 {
