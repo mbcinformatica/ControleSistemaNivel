@@ -2,7 +2,7 @@
   "version": "0.2.1",
   "tasks": [
     {
-      "taskLabel": "tarefa-ControleSistemaNiivel",
+      "taskLabel": "tarefa-ControleSistemaNivel",
       "appliesTo": "/",
       "type": "launch"
     }
