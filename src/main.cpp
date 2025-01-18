@@ -113,7 +113,6 @@ void setup()
     pinMode(pinBotaoLigaBombaSaida, INPUT_PULLUP);
     pinMode(pinBotaoResetAlarme, INPUT_PULLUP);
 
-
     if (!SPIFFS.begin())
     {
         Serial.println("Erro ao montar o sistema de arquivos SPIFFS");
@@ -147,7 +146,7 @@ void setup()
 
     digitalWrite(pinAlarme, LOW);              // Desliga Alarme
     digitalWrite(pinBotaoLigaBombaSaida, LOW); // Desliga Alarme
-    digitalWrite(pinBotaoResetAlarme, LOW); // Desliga Alarme
+    digitalWrite(pinBotaoResetAlarme, LOW);    // Desliga Alarme
 
     previousMillisHistorico.set(10000);
     previousMillisSensor.set(1500);
@@ -176,9 +175,6 @@ void loop()
     int btnResetAlarme = digitalRead(pinBotaoResetAlarme);
     botaoLigaBombaSaida = digitalRead(pinBotaoLigaBombaSaida);
     alarmeLigado = digitalRead(pinAlarme);
-    Serial.println(alarmeLigado);
-    Serial.println(btnResetAlarme);
-    Serial.println(botaoResetaAlarme);
 
     if (btnResetAlarme == 0)
     {
@@ -187,6 +183,9 @@ void loop()
     if (alarmeLigado && botaoResetaAlarme)
     {
         digitalWrite(pinAlarme, LOW); // Desliga Alarme
+        Serial.println("Alarme Desligado!");
+        atualizaHistoricoDispositivos(pinAlarme, 0);
+        handleDispositivos(); // Envia atualização para o servidor
     }
     if (botaoLigaBombaSaida)
     {
@@ -311,11 +310,14 @@ void tratamentoSensorDispositivos()
         }
         else if ((alarmeLigado || botaoResetaAlarme) && (nivel <= 12 && nivel >= 3))
         {
-            digitalWrite(pinAlarme, LOW); // Desliga Alarme
+            if (alarmeLigado)
+            {
+                digitalWrite(pinAlarme, LOW); // Desliga Alarme
+                Serial.println("Alarme Desligado!");
+                atualizaHistoricoDispositivos(pinAlarme, 0);
+                handleDispositivos(); // Envia atualização para o servidor
+            }
             botaoResetaAlarme = 0;
-            Serial.println("Alarme Desligado!");
-            atualizaHistoricoDispositivos(pinAlarme, 0);
-            handleDispositivos(); // Envia atualização para o servidor
         }
     }
 }
