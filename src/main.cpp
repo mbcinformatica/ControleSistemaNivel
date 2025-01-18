@@ -9,7 +9,6 @@
 #include <Ultrasonic.h>
 #include <neotimer.h>
 
-
 WiFiClient wifiClient;
 char *site_url = "http://192.168.1.198:8080/api.php";
 
@@ -34,8 +33,6 @@ ESP8266WebServer server(80);
 #define pinBotaoLigaBombaSaida 15
 #define pinAlarmeNivelAlto 14
 
-int frequencia = 5400;
-int tempo = 10;
 int botaoResetaAlarme = 0;
 int alarmeLigado = 0;
 int botaoLigaBombaSaida = 0;
@@ -101,7 +98,6 @@ void ReconfiguraWiFi();
 void saveConfigCallback();
 void configModeCallback(WiFiManager *myWiFiManager);
 void atualizaHistoricoSensor();
-void alertaPassivo();
 void tratamentoSensorDispositivos();
 
 void setup()
@@ -115,6 +111,8 @@ void setup()
     pinMode(pinBotaoLigaBombaSaida, INPUT_PULLUP);
     pinMode(pinAlarmeNivelAlto, INPUT_PULLUP);
     pinMode(pinBotaoLigaBombaSaida, INPUT_PULLUP);
+    pinMode(pinBotaoResetAlarme, INPUT_PULLUP);
+
 
     if (!SPIFFS.begin())
     {
@@ -149,6 +147,7 @@ void setup()
 
     digitalWrite(pinAlarme, LOW);              // Desliga Alarme
     digitalWrite(pinBotaoLigaBombaSaida, LOW); // Desliga Alarme
+    digitalWrite(pinBotaoResetAlarme, LOW); // Desliga Alarme
 
     previousMillisHistorico.set(10000);
     previousMillisSensor.set(1500);
@@ -176,14 +175,18 @@ void loop()
 
     int btnResetAlarme = digitalRead(pinBotaoResetAlarme);
     botaoLigaBombaSaida = digitalRead(pinBotaoLigaBombaSaida);
+    alarmeLigado = digitalRead(pinAlarme);
+    Serial.println(alarmeLigado);
+    Serial.println(btnResetAlarme);
+    Serial.println(botaoResetaAlarme);
 
     if (btnResetAlarme == 0)
     {
         botaoResetaAlarme = 1;
     }
-    if (alarmeLigado && !botaoResetaAlarme)
+    if (alarmeLigado && botaoResetaAlarme)
     {
-        alertaPassivo();
+        digitalWrite(pinAlarme, LOW); // Desliga Alarme
     }
     if (botaoLigaBombaSaida)
     {
@@ -230,11 +233,6 @@ void configModeCallback(WiFiManager *myWiFiManager)
     Serial.println(myWiFiManager->getConfigPortalSSID());
 }
 
-void alertaPassivo()
-{
-    tone(pinAlarme, frequencia, tempo);
-}
-
 void tratamentoSensorDispositivos()
 {
     // Lógica para controlar as bombas e o alarme com base na leitura do sensor de nível
@@ -244,9 +242,9 @@ void tratamentoSensorDispositivos()
     if (nivel == 0)
     {
         zerarContadorNivel++;
-        if (zerarContadorNivel >= 10 && !alarmeLigado)
+        if (zerarContadorNivel >= 10 && !alarmeLigado && !botaoResetaAlarme)
         {
-            alarmeLigado = true;
+            digitalWrite(pinAlarme, HIGH); // Liga Alarme
             atualizaHistoricoDispositivos(pinAlarme, 1);
             handleDispositivos(); // Envia atualização para o servidor
         }
@@ -287,11 +285,11 @@ void tratamentoSensorDispositivos()
             handleDispositivos(); // Envia atualização para o servidor
         }
 
-        if (!alarmeLigado)
+        if (!alarmeLigado && !botaoResetaAlarme)
         {
             if ((nivel >= 14) || (nivel <= 2))
             {
-                alarmeLigado = true;
+                digitalWrite(pinAlarme, HIGH); // Liga Alarme
                 Serial.println("Alarme Ligado!");
                 if (bombaEntradaLigada)
                 {
@@ -311,9 +309,9 @@ void tratamentoSensorDispositivos()
                 handleDispositivos(); // Envia atualização para o servidor
             }
         }
-        else if (alarmeLigado && (nivel <= 12 && nivel >= 3))
+        else if ((alarmeLigado || botaoResetaAlarme) && (nivel <= 12 && nivel >= 3))
         {
-            alarmeLigado = false;
+            digitalWrite(pinAlarme, LOW); // Desliga Alarme
             botaoResetaAlarme = 0;
             Serial.println("Alarme Desligado!");
             atualizaHistoricoDispositivos(pinAlarme, 0);
