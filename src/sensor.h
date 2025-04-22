@@ -94,6 +94,8 @@ void setupSensor()
     pinMode(pinUltrasonEcho, INPUT);
     for (int i = 0; i < nArraySensor; i++)
     {
+    
+        Serial.println("inserir sensor");
         inserirSensor(&DeviceSensorList[i]);
     }
 }
@@ -102,7 +104,6 @@ void atualizaHistoricoSensor()
 {
     for (int i = 0; i < nArraySensor; i++)
     {
-
         inserirHistoricoSensor(&DeviceSensorList[i]);
     }
 }
@@ -115,6 +116,9 @@ void inserirSensor(DeviceSensor *devicesensor)
                        "&imgon=" + String(urlencode(devicesensor->imgon)) +
                        "&imgoff=" + String(urlencode(devicesensor->imgoff)) +
                        "&identifier=" + String(devicesensor->identifier);
+
+    Serial.println(urlSensor);
+
     http.begin(wifiClient, urlSensor);
     http.addHeader("Content-Type", "application/json");
     int httpResponseCode = http.GET();
@@ -124,13 +128,13 @@ void inserirSensor(DeviceSensor *devicesensor)
         String response = http.getString();
         Serial.println(httpResponseCode);
         Serial.println(response);
+        Serial.print("Sensor incluido com sucesso :"); // Imprime uma mensagem de erro no console
     }
     else
     {
-        Serial.print("Erro ao enviar: ");
+        Serial.print("Erro ao incluir sensor : "); // Imprime uma mensagem de erro no console
         Serial.println(httpResponseCode);
     }
-
     http.end();
 }
 
@@ -143,15 +147,22 @@ void inserirHistoricoSensor(DeviceSensor *devicesensor)
     http.addHeader("Content-Type", "application/json");
     int httpResponseCode = http.GET();
 
+    Serial.println(urlSensor);
+    Serial.println(http.begin(wifiClient, urlSensor));
+    Serial.println(http.GET());
+
+
     if (httpResponseCode > 0)
     {
         String response = http.getString();
         Serial.println(httpResponseCode);
         Serial.println(response);
+        Serial.print("Histórico do sensor registrado com sucesso: "); // Imprime uma mensagem de erro no console
+
     }
     else
     {
-        Serial.print("Erro ao enviar: ");
+        Serial.print("Erro ao registrar histórico do sensor : "); // Imprime uma mensagem de erro no console
         Serial.println(httpResponseCode);
     }
 

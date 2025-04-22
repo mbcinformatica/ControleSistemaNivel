@@ -116,8 +116,7 @@ if (!window.dispositivosController) {
             let dispositivos = data.dispositivos;
             if (inicializado) {
               atualizarDispositivosHTML(dispositivos);
-              console.log(dispositivos);
-
+              console.log(dispositivos);              
             } else {
               renderDispositivos(dispositivos);
               inicializado = true;

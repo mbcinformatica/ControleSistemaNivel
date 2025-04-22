@@ -10,15 +10,15 @@
 #include <neotimer.h>
 
 WiFiClient wifiClient;
-char *site_url = "http://192.168.1.198:8080/api.php";
+char *site_url = "http://172.28.186.120:8080/api.php";
 
 #include <device.h>
 #include <sensor.h>
 
-IPAddress staticIP(192, 168, 1, 22);
-IPAddress gateway(192, 168, 1, 100);
+IPAddress staticIP(192, 168, 2, 222);
+IPAddress gateway(192, 168, 2, 100);
 IPAddress subnet(255, 255, 255, 0);
-IPAddress webServer(192, 168, 1, 198);
+IPAddress webServer(172, 28, 186, 120);
 
 Neotimer previousMillisHistorico;
 Neotimer previousMillisSensor;
@@ -138,12 +138,6 @@ void setup()
     Serial.println("mDNS configurado. Acesse http://dispositivos.local");
     MDNS.addService("http", "tcp", 80);
 
-    if (wifiClient.connect(webServer, 8080))
-    {
-        setupSensor();
-        setupDevices();
-    }
-
     digitalWrite(pinAlarme, LOW);              // Desliga Alarme
     digitalWrite(pinBotaoLigaBombaSaida, LOW); // Desliga Alarme
     digitalWrite(pinBotaoResetAlarme, LOW);    // Desliga Alarme
@@ -158,6 +152,9 @@ void setup()
     server.serveStatic("/", SPIFFS, "/");
     server.begin();
     Serial.println("Servidor HTTP iniciado");
+
+    setupDevices();    
+    setupSensor();
 }
 
 void loop()
@@ -318,6 +315,22 @@ void tratamentoSensorDispositivos()
                 handleDispositivos(); // Envia atualização para o servidor
             }
             botaoResetaAlarme = 0;
+        }
+    }
+}
+
+void pauseUntilEnter()
+{
+    Serial.println("Pressione Enter para continuar...");
+    while (true)
+    {
+        if (Serial.available() > 0)
+        {                           // Verifica se há dados disponíveis na entrada serial
+            char c = Serial.read(); // Lê o caractere da entrada serial
+            if (c == '\n')
+            {          // Verifica se o caractere é Enter (nova linha)
+                break; // Sai do loop
+            }
         }
     }
 }

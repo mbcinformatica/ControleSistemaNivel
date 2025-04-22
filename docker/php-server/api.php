@@ -4,11 +4,12 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-$servername = "192.168.1.198";
+$servername = "172.28.186.120";
 $username = "root";
 $password = "password";
 $dbname = "iot";
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername,  $username, $password, $dbname);
+
 if ($conn->connect_error) {
     // Gravar log de erros
     echo json_encode(['error' => 'Não foi possível estabelecer conexão com o BD: ']);

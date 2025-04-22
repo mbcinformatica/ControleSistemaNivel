@@ -30,7 +30,7 @@ CREATE TABLE `historico_dispositivo` (
   PRIMARY KEY (`id`),
   KEY `iddisp` (`iddisp`),
   CONSTRAINT `historico_dispositivo_ibfk_1` FOREIGN KEY (`iddisp`) REFERENCES `dispositivo` (`iddisp`)
-) ENGINE=InnoDB AUTO_INCREMENT=234 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
