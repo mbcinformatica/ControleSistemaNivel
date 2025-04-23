@@ -229,7 +229,7 @@ li p strong sup {
 }
 
 li div {
-  float: inline-end;
+  float: right;
   height: 131px;
   margin: 0px -55px 0px 0px;
   width: 170px;
@@ -458,24 +458,24 @@ li div.christmas {
   0%,
   40%,
   100% {
-    transform: scaleY(0.05);
     -webkit-transform: scaleY(0.05);
+    transform: scaleY(0.05);
   }
   20% {
-    transform: scaleY(1);
     -webkit-transform: scaleY(1);
+    transform: scaleY(1);
   }
 }
 @keyframes delay {
   0%,
   40%,
   100% {
-    transform: scaleY(0.05);
     -webkit-transform: scaleY(0.05);
+    transform: scaleY(0.05);
   }
   20% {
-    transform: scaleY(1);
     -webkit-transform: scaleY(1);
+    transform: scaleY(1);
   }
 }
 

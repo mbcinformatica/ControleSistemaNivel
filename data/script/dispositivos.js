@@ -34,7 +34,7 @@ if (!window.dispositivosController) {
             imgLamp.style.padding = dispositivo.preenchimento;
             divLamp.appendChild(imgLamp);
 
-            if (dispositivo.mostrabotao === 1) {
+            if (dispositivo.mostrabotao === true) {
               const imgBotao = document.createElement("img");
               imgBotao.src = dispositivo.estado ? "img/Botao_Desliga.png" : "img/Botao_Liga.png";
               imgBotao.width = 30;
