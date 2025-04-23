@@ -10,7 +10,7 @@
 #include <neotimer.h>
 
 WiFiClient wifiClient;
-char *site_url = "http://172.28.186.120:8080/api.php";
+char *site_url = "http://192.168.2.51:8080/api.php";
 
 #include <device.h>
 #include <sensor.h>
@@ -18,7 +18,7 @@ char *site_url = "http://172.28.186.120:8080/api.php";
 IPAddress staticIP(192, 168, 2, 222);
 IPAddress gateway(192, 168, 2, 100);
 IPAddress subnet(255, 255, 255, 0);
-IPAddress webServer(172, 28, 186, 120);
+IPAddress webServer(192, 168, 2, 51);
 
 Neotimer previousMillisHistorico;
 Neotimer previousMillisSensor;
