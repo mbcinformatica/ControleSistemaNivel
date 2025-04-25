@@ -7,8 +7,7 @@
 #include <ArduinoJson.h>
 #include <Ultrasonic.h>
 #include <neotimer.h>
-//#include <neotimer.h>
-
+// #include <neotimer.h>
 
 WiFiClient wifiClient;
 char *site_url = "http://192.168.2.52:8080/api.php";
@@ -39,6 +38,7 @@ int alarmeLigado = 0;
 int botaoLigaBombaSaida = 0;
 int zerarContadorNivel = 0;
 float nivel;
+float nivelAnterior = 0;
 
 void handleRoot()
 {
@@ -194,7 +194,11 @@ void loop()
     }
     if (previousMillisHistorico.repeat())
     {
-        atualizaHistoricoSensor();
+        if (nivel != nivelAnterior)
+        {
+            atualizaHistoricoSensor();
+            nivelAnterior = nivel;
+        }
     }
     if (previousMillisSensor.repeat() || botaoLigaBombaSaida || nivel == 0)
     {
@@ -239,6 +243,14 @@ void tratamentoSensorDispositivos()
     nivel = getAlturaNivel().toFloat();
     int bombaEntradaLigada = digitalRead(pinBombaEntrada);
     int bombaSaidaLigada = digitalRead(pinBombaSaida);
+    Serial.print("Nivel: ");
+    Serial.println(nivel);
+    Serial.print("Nivel Anterior: ");
+    Serial.println(nivelAnterior);
+    Serial.print("BombaEntradaLigada: ");
+    Serial.println(bombaEntradaLigada);
+    Serial.print("BombaSaidaLigada: ");
+    Serial.println(bombaSaidaLigada);
     if (nivel == 0)
     {
         zerarContadorNivel++;

@@ -121,8 +121,8 @@ void inserirSensor(DeviceSensor *devicesensor)
 
     if (httpResponseCode > 0)
     {
-        String response = http.getString();
         Serial.print("Sensor incluido com sucesso :"); // Imprime uma mensagem de erro no console
+        Serial.println(httpResponseCode); // Imprime o código de resposta HTTP no console
     }
     else
     {
@@ -143,9 +143,8 @@ void inserirHistoricoSensor(DeviceSensor *devicesensor)
 
     if (httpResponseCode > 0)
     {
-        String response = http.getString();
-        Serial.println("Histórico do sensor registrado com sucesso: "); // Imprime uma mensagem de erro no console
-
+        Serial.print("Histórico do sensor registrado com sucesso: "); // Imprime uma mensagem de erro no console
+        Serial.println(httpResponseCode); // Imprime o código de resposta HTTP no console
     }
     else
     {
