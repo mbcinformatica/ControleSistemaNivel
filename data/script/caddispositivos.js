@@ -79,7 +79,9 @@ if (!window.caddispositivosController) {
               row.dataset.larguraImagem = dispositivo.widthimg;
               row.dataset.alturaImagem = dispositivo.heightimg;
               row.dataset.identifier = dispositivo.identifier;
-
+              row.dataset.preenchimento = dispositivo.paddingimg;
+              row.dataset.tipopino = dispositivo.pintype;
+              row.dataset.mostrabotao = dispositivo.showbutton;
               row.innerHTML = `
                 <td style="text-align: center; font-size: 20px;">${dispositivo.iddisp}</td>
                 <td style="font-size: 20px; padding: 7px;">${dispositivo.name}</td>
@@ -105,7 +107,9 @@ if (!window.caddispositivosController) {
           widthimg: formData.get("largura"),
           heightimg: formData.get("altura"),
           paddingimg: formData.get("preenchimento"),
-          identifier: formData.get("identifier")
+          identifier: formData.get("identifier"),
+          showbutton: formData.get("mostrabotao"),
+          pintype: formData.get("tipopino")
         };
 
         fetch(`http://192.168.2.52:8080/api.php?action=inserir-dispositivo`, {

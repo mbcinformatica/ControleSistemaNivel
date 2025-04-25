@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <FS.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WebServer.h>
@@ -18,7 +17,7 @@ char *site_url = "http://192.168.2.52:8080/api.php";
 #include <sensor.h>
 
 IPAddress staticIP(192, 168, 2, 222);
-IPAddress gateway(192, 168, 2, 100);
+IPAddress gateway(192, 168, 2, 1);
 IPAddress subnet(255, 255, 255, 0);
 IPAddress webServer(192, 168, 2, 52);
 
@@ -147,6 +146,12 @@ void setup()
     previousMillisHistorico.set(10000);
     previousMillisSensor.set(1500);
 
+    if (wifiClient.connect(webServer, 8080))
+    {
+        setupSensor();  // Configura os sensores
+        setupDevices(); // Configura os dispositivos
+    }
+
     server.on("/", handleRoot);
     server.on("/api/sensores", HTTP_GET, handleSensores);
     server.on("/api/dispositivos", HTTP_GET, handleDispositivos);
@@ -154,9 +159,6 @@ void setup()
     server.serveStatic("/", SPIFFS, "/");
     server.begin();
     Serial.println("Servidor HTTP iniciado");
-
-    setupDevices();    
-    setupSensor();
 }
 
 void loop()

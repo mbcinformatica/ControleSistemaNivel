@@ -28,7 +28,7 @@ Device deviceList[nArrayDispositivos] = {
     {4, false, "Status Bomba Entrada", "img/Bomba_On.gif", "img/Bomba_Off.gif", 100, 100, "5px -3px", "bomba_entrada", "OUTPUT", true},
     {5, false, "Status Bomba Saida", "img/Bomba_On.gif", "img/Bomba_Off.gif", 100, 100, "5px -3px", "bomba_saida", "OUTPUT", true},
     {2, false, "Botão Reset", "", "", 0, 0, "", "botao_reset", "INPUT", false},
-    {16, false, "Status Operac. Sistema", "img/Alarme_On.gif", "img/Alarme_Off.gif", 100, 100, "11px 2px 3px 44px", "alarme_sistema", "OUTPUT", false}
+    {16, false, "Status do Sistema", "img/Alarme_On.gif", "img/Alarme_Off.gif", 100, 100, "11px 2px 3px 44px", "alarme_sistema", "OUTPUT", false}
 };
 
 // Função para obter os dados dos dispositivos em formato JSON
@@ -101,12 +101,9 @@ void inserirDispositivo(Device *device) {
     http.addHeader("Content-Type", "application/json");
     int httpResponseCode = http.GET();
 
-    Serial.println(urlDispositivo);
-
-    if (httpResponseCode > 0) {
+    if (httpResponseCode > 0)
+    {
         String response = http.getString();
-        Serial.println(httpResponseCode);
-        Serial.println(response);
         Serial.println("Dispositivo incluído com sucesso.");
     } else {
         Serial.print("Erro ao incluir dispositivo: ");
@@ -132,16 +129,13 @@ void inserirHistoricoDispositivo(Device *device) {
     String urlDispositivo = String(site_url) + "?action=inserir-historico-dispositivo&identifier=" +
                             urlencode(device->identifier) + "&state=" + String(device->state);
 
-    Serial.println(urlDispositivo);
-
     http.begin(wifiClient, urlDispositivo);
     http.addHeader("Content-Type", "application/json");
     int httpResponseCode = http.GET();
 
-    if (httpResponseCode > 0) {
+    if (httpResponseCode > 0) 
+    {
         String response = http.getString();
-        Serial.println(httpResponseCode);
-        Serial.println(response);
         Serial.println("Histórico do dispositivo registrado com sucesso.");
     } else {
         Serial.print("Erro ao registrar histórico do dispositivo: ");

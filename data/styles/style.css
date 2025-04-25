@@ -72,6 +72,7 @@ h2 {
     1px 1px 0px 0px rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 1px 0px 0px rgba(255, 255, 255, 0.5),
     1px 1px 0px 0px rgba(0, 0, 0, 0.5);
+    text-align: center;
 
   clear: left;
   color: #030211;

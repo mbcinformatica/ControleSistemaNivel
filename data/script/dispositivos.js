@@ -93,7 +93,7 @@ if (!window.dispositivosController) {
 
           const imgDispositivo = itemDispositivo.querySelector(".imgDispositivo");
           imgDispositivo.src = dispositivo.estado ? dispositivo.imageon : dispositivo.imageoff;
-          if (dispositivo.mostrabotao === 1) {
+          if (dispositivo.mostrabotao === true) {
             const btnDispositivo = itemDispositivo.querySelector(".btnDispositivo");
             btnDispositivo.src = dispositivo.estado ? "img/Botao_Desliga.png" : "img/Botao_Liga.png";
           }
