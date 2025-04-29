@@ -62,11 +62,15 @@ if (!window.caddispositivosController) {
         fetch(`http://192.168.1.52:8080/api.php?action=listar-dispositivos`)
           .then(response => {
             if (!response.ok) {
-              throw new Error('Erro ao buscar dispositivos');
+              throw new Error(`Erro ao buscar dispositivos: ${response.statusText}`);
             }
             return response.json();
           })
           .then(dispositivos => {
+            if (!Array.isArray(dispositivos)) {
+              throw new Error('Resposta inválida da API. Esperado um array.');
+            }
+
             tabelaDispositivos.innerHTML = ''; // Limpar tabela antes de preencher
 
             dispositivos.forEach(dispositivo => {
@@ -80,8 +84,6 @@ if (!window.caddispositivosController) {
               row.dataset.alturaImagem = dispositivo.heightimg;
               row.dataset.identifier = dispositivo.identifier;
               row.dataset.preenchimento = dispositivo.paddingimg;
-              row.dataset.tipopino = dispositivo.pintype;
-              row.dataset.mostrabotao = dispositivo.showbutton;
               row.innerHTML = `
                 <td style="text-align: center; font-size: 20px;">${dispositivo.iddisp}</td>
                 <td style="font-size: 20px; padding: 7px;">${dispositivo.name}</td>
@@ -107,9 +109,7 @@ if (!window.caddispositivosController) {
           widthimg: formData.get("largura"),
           heightimg: formData.get("altura"),
           paddingimg: formData.get("preenchimento"),
-          identifier: formData.get("identifier"),
-          showbutton: formData.get("mostrabotao"),
-          pintype: formData.get("tipopino")
+          identifier: formData.get("identifier")
         };
 
         fetch(`http://192.168.1.52:8080/api.php?action=inserir-dispositivo`, {
@@ -121,11 +121,14 @@ if (!window.caddispositivosController) {
         })
           .then(response => {
             if (!response.ok) {
-              throw new Error('Erro ao realizar a operação');
+              throw new Error(`Erro ao realizar a operação: ${response.statusText}`);
             }
             return response.json();
           })
           .then(data => {
+            if (!data || !data.message) {
+              throw new Error('Resposta inválida da API.');
+            }
             alert(data.message || 'Operação realizada com sucesso!');
             formCadastro.reset(); // Limpar os dados preenchidos
             carregarDispositivos(); // Recarregar a lista de dispositivos
