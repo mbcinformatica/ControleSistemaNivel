@@ -10,15 +10,15 @@
 // #include <neotimer.h>
 
 WiFiClient wifiClient;
-char *site_url = "http://192.168.2.111:8080/api.php";
+char *site_url = "http://192.168.1.52:8080/api.php";
 
 #include <device.h>
 #include <sensor.h>
 
-IPAddress staticIP(192, 168, 2, 100);
-IPAddress gateway(192, 168, 2, 1);
+IPAddress staticIP(192, 168, 1, 200);
+IPAddress gateway(192, 168, 1, 100);
 IPAddress subnet(255, 255, 255, 0);
-IPAddress webServer(192, 168, 2, 111);
+IPAddress webServer(192, 168, 1, 52);
 
 Neotimer previousMillisHistorico;
 Neotimer previousMillisSensor;
@@ -192,7 +192,7 @@ void loop()
     {
         botaoLigaBombaSaida = 1;
     }
-    if (previousMillisHistorico.repeat())
+    if (previousMillisHistorico.repeat() || nivel != nivelAnterior)
     {
         if (nivel != nivelAnterior)
         {

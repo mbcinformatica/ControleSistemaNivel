@@ -59,7 +59,7 @@ if (!window.caddispositivosController) {
 
       // Função para buscar dispositivos e preencher a tabela
       function carregarDispositivos() {
-        fetch(`http://192.168.2.52:8080/api.php?action=listar-dispositivos`)
+        fetch(`http://192.168.1.52:8080/api.php?action=listar-dispositivos`)
           .then(response => {
             if (!response.ok) {
               throw new Error('Erro ao buscar dispositivos');
@@ -112,7 +112,7 @@ if (!window.caddispositivosController) {
           pintype: formData.get("tipopino")
         };
 
-        fetch(`http://192.168.2.52:8080/api.php?action=inserir-dispositivo`, {
+        fetch(`http://192.168.1.52:8080/api.php?action=inserir-dispositivo`, {
           method: 'POST',
           body: JSON.stringify(dispositivo),
           headers: {
