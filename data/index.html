@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="icone.ico" type="image/x-icon" />
     <title>MBC Informática</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <script src="script/app.js"></script>
-  </head>
+    <link rel="stylesheet" href="styles/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js" defer></script>
+    <script src="script/app.js" defer></script>  </head>
   <body>
     <header>
-      <img src="img/MBCLogo.png" alt="MBC Logo" />
+      <img src="img/MBCLogo.png" alt="Logo da MBC Informática" />
       <h1 class="moving-text">MBC Informática</h1>
     </header>
 
-    <div class="topnav">
+    <nav class="topnav" aria-label="Navegação principal">
       <a class="active" href="#home">Monitoramentos</a>
       <a href="#dispositivos">Dispositivos</a>
       <a href="#sensores">Sensores</a>
       <a href="#caddispositivos">Cadastro de Dispositivos</a>
       <a href="#relhistdispsens">Relatório Histórico Dispositivos/Sensores</a>
-    </div>
-    <div id="app"></div>
-  </body>
+    </nav>
 
+    <main id="app" role="main">
+      <!-- O conteúdo dinâmico será carregado aqui -->
+    </main>
+  </body>
 </html>
