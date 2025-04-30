@@ -6,7 +6,7 @@ if (!window.caddispositivosController) {
       const formHTML = `
       <div class="form-container">
         <form id="formCadastroDispositivo">
-          <span>Cadastro de Dispositivos</span><br><br>
+          <span>Entre com os Dados</span><br><br>
 
           <label for="nome">Nome:</label>
           <input type="text" id="nome" name="nome" required><br>

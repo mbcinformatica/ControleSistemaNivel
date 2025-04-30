@@ -243,14 +243,6 @@ void tratamentoSensorDispositivos()
     nivel = getAlturaNivel().toFloat();
     int bombaEntradaLigada = digitalRead(pinBombaEntrada);
     int bombaSaidaLigada = digitalRead(pinBombaSaida);
-    Serial.print("Nivel: ");
-    Serial.println(nivel);
-    Serial.print("Nivel Anterior: ");
-    Serial.println(nivelAnterior);
-    Serial.print("BombaEntradaLigada: ");
-    Serial.println(bombaEntradaLigada);
-    Serial.print("BombaSaidaLigada: ");
-    Serial.println(bombaSaidaLigada);
     if (nivel == 0)
     {
         zerarContadorNivel++;

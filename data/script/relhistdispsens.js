@@ -11,7 +11,7 @@ if (!window.relhistdispsensController) {
       const formHTML = `
         <div class="form-container">
           <form id="formRelatorioHistorico">
-            <span>Relatório de Histórico de Dispositivos e Sensores</span><br><br>
+            <span>Informe o Periodo</span><br><br>
 
             <label for="dataInicial">Data Inicial:</label>
             <input type="date" id="dataInicial" name="dataInicial" required><br>
@@ -144,8 +144,8 @@ if (!window.relhistdispsensController) {
                 columnStyles: {
                   0: { cellWidth: 50 }, // Largura da coluna "Data/Hora"
                   1: { cellWidth: 30 }, // Largura da coluna "Tipo"
-                  2: { cellWidth: 60 }, // Largura da coluna "Nome"
-                  3: { cellWidth: 20 }, // Largura da coluna "Valor"
+                  2: { cellWidth: 50 }, // Largura da coluna "Nome"
+                  3: { cellWidth: 30 }, // Largura da coluna "Valor"
                 },
                 didDrawPage: function (data) {
                   // Adiciona o título no topo de cada página
