@@ -62,15 +62,11 @@ if (!window.caddispositivosController) {
         fetch(`http://192.168.1.52:8080/api.php?action=listar-dispositivos`)
           .then(response => {
             if (!response.ok) {
-              throw new Error(`Erro ao buscar dispositivos: ${response.statusText}`);
+              throw new Error('Erro ao buscar dispositivos');
             }
             return response.json();
           })
           .then(dispositivos => {
-            if (!Array.isArray(dispositivos)) {
-              throw new Error('Resposta inválida da API. Esperado um array.');
-            }
-
             tabelaDispositivos.innerHTML = ''; // Limpar tabela antes de preencher
 
             dispositivos.forEach(dispositivo => {
@@ -82,8 +78,9 @@ if (!window.caddispositivosController) {
               row.dataset.imagemDesligado = dispositivo.imgoff;
               row.dataset.larguraImagem = dispositivo.widthimg;
               row.dataset.alturaImagem = dispositivo.heightimg;
-              row.dataset.identifier = dispositivo.identifier;
               row.dataset.preenchimento = dispositivo.paddingimg;
+              row.dataset.identifier = dispositivo.identifier;
+
               row.innerHTML = `
                 <td style="text-align: center; font-size: 20px;">${dispositivo.iddisp}</td>
                 <td style="font-size: 20px; padding: 7px;">${dispositivo.name}</td>
@@ -121,14 +118,11 @@ if (!window.caddispositivosController) {
         })
           .then(response => {
             if (!response.ok) {
-              throw new Error(`Erro ao realizar a operação: ${response.statusText}`);
+              throw new Error('Erro ao realizar a operação');
             }
             return response.json();
           })
           .then(data => {
-            if (!data || !data.message) {
-              throw new Error('Resposta inválida da API.');
-            }
             alert(data.message || 'Operação realizada com sucesso!');
             formCadastro.reset(); // Limpar os dados preenchidos
             carregarDispositivos(); // Recarregar a lista de dispositivos

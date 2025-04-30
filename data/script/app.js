@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       dispositivos: ["dispositivos.js"],
       sensores: ["sensores.js"],
       caddispositivos: ["caddispositivos.js"],
+      relhistoricodispositivossensores: ["relhistdispsens.js"],
     };
 
     const scriptsToLoad = scriptNames[page] || [];
