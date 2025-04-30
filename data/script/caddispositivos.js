@@ -40,7 +40,7 @@ if (!window.caddispositivosController) {
             <thead>
               <tr>
                 <th style="width: 60px; text-align: center;">ID</th>
-                <th style="width: 250px; padding: 7px;">Nome</th>
+                <th style="width: 400px; padding: 7px;">Nome</th>
                 <th style="width: 90px; text-align: center;">Pino</th>
                 <th style="width: 300px; padding: 7px;">Identificador</th>
               </tr>

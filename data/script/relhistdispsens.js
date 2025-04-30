@@ -10,7 +10,13 @@ if (!window.relhistdispsensController) {
 
       const formHTML = `
         <div class="form-container">
-          <form id="formRelatorioHistorico">
+          <form id="formRelatorioHistorico" style="
+    width: 222px;
+    height: 300px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-left: 0px;
+">
             <span>Informe o Periodo</span><br><br>
 
             <label for="dataInicial">Data Inicial:</label>
