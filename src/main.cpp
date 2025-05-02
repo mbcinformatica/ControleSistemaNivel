@@ -77,7 +77,7 @@ void loop()
     int btnResetAlarme = digitalRead(pinBotaoResetAlarme);
     botaoLigaBombaSaida = digitalRead(pinBotaoLigaBombaSaida);
     alarmeLigado = digitalRead(pinAlarme);
-
+/*
     if (btnResetAlarme == 0)
     {
         botaoResetaAlarme = 1;
@@ -109,7 +109,7 @@ void loop()
     {
         tratamentoSensorDispositivos();
     }
-
+*/
     delay(100);
 }
 
