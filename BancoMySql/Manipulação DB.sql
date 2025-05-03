@@ -1,0 +1,25 @@
+use iot;
+
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE dispositivo;
+SET FOREIGN_KEY_CHECKS = 1;
+
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE historico_dispositivo;
+SET FOREIGN_KEY_CHECKS = 1;
+
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE sensor;
+SET FOREIGN_KEY_CHECKS = 1;
+
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE historico_sensor;
+SET FOREIGN_KEY_CHECKS = 1;
+
+SELECT * FROM dispositivo;
+
+SELECT * FROM historico_dispositivo;
+
+SELECT * FROM sensor;
+
+SELECT * FROM historico_sensor;

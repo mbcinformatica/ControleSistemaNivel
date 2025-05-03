@@ -98,6 +98,12 @@ if (!window.relhistdispsensController) {
 
             // Adicionar evento para exportar o relatório em PDF
             btnExportarPDF.onclick = function () {
+
+              if (!window.jspdf) {
+                console.error("jsPDF não está disponível. Verifique se o arquivo foi carregado corretamente.");
+                return;
+              }
+              
               const { jsPDF } = window.jspdf;
               const doc = new jsPDF({ orientation: "landscape" }); // A4 em paisagem
 

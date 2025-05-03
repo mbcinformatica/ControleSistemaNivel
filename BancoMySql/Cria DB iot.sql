@@ -1,3 +1,5 @@
+CREATE DATABASE iot;
+
 use iot;
 
 CREATE TABLE `dispositivo` (

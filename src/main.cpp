@@ -7,7 +7,9 @@
 #include <ArduinoJson.h>
 #include <Ultrasonic.h>
 #include <neotimer.h>
-#include "config.h" // Inclui as configurações de rede
+#include "config.h" 
+#include <FS.h>
+
 
 WiFiClient wifiClient;
 IPAddress staticIP;
@@ -18,7 +20,7 @@ IPAddress webServer;
 #include <device.h>
 #include <sensor.h>
 
-Neotimer previousMillisHistorico(10000);
+Neotimer previousMillisHistorico(5000);
 Neotimer previousMillisSensor(1500);
 
 ESP8266WebServer server(80);
@@ -77,7 +79,7 @@ void loop()
     int btnResetAlarme = digitalRead(pinBotaoResetAlarme);
     botaoLigaBombaSaida = digitalRead(pinBotaoLigaBombaSaida);
     alarmeLigado = digitalRead(pinAlarme);
-/*
+
     if (btnResetAlarme == 0)
     {
         botaoResetaAlarme = 1;
@@ -96,7 +98,7 @@ void loop()
         botaoLigaBombaSaida = 1;
     }
 
-    if (previousMillisHistorico.repeat() || nivel != nivelAnterior)
+    if ((previousMillisHistorico.repeat()) && (nivel != nivelAnterior))
     {
         if (nivel != nivelAnterior)
         {
@@ -109,8 +111,6 @@ void loop()
     {
         tratamentoSensorDispositivos();
     }
-*/
-    delay(100);
 }
 
 void configurarRede()
@@ -163,14 +163,11 @@ void configurarPinos()
 void configurarServidor()
 {
 
-    previousMillisHistorico.set(10000);
+    previousMillisHistorico.set(5000);
     previousMillisSensor.set(1500);
 
-    if (wifiClient.connect(webServer, 8080))
-    {
-        setupSensor();  // Configura os sensores
-        setupDevices(); // Configura os dispositivos
-    }
+    setupSensor();  // Configura os sensores
+    setupDevices(); // Configura os dispositivos
 
     server.on("/", handleRoot);
     server.on("/api/sensores", HTTP_GET, handleSensores);
@@ -294,7 +291,7 @@ void tratamentoSensorDispositivos()
                 atualizaHistoricoDispositivos(pinBombaEntrada, 1);
                 handleDispositivos(); // Envia atualização para o servidor
             }
-            else if (nivel <= 4 && nivel >= 3 || botaoLigaBombaSaida == 1)
+            else if ((nivel <= 4 && nivel >= 3) || botaoLigaBombaSaida == 1)
             {
                 digitalWrite(pinBombaSaida, HIGH); // Liga Bomba Saída
                 Serial.println("Bomba de Saída Ligada!");
@@ -309,7 +306,7 @@ void tratamentoSensorDispositivos()
             atualizaHistoricoDispositivos(pinBombaEntrada, 0);
             handleDispositivos(); // Envia atualização para o servidor
         }
-        else if (bombaSaidaLigada && nivel >= 12 || botaoLigaBombaSaida == 1)
+        else if (((bombaSaidaLigada) && (nivel >= 12)) || (botaoLigaBombaSaida == 1))
         {
             digitalWrite(pinBombaSaida, LOW); // Desliga Bomba Saída
             Serial.println("Bomba de Saída Desligada!");
