@@ -32,8 +32,8 @@ ESP8266WebServer server(80);
 #define pinBotaoResetAlarme 2
 #define pinBotaoLigaBombaSaida 15
 #define pinAlarmeNivelAlto 14
-// #define pinUltrasonTrig 12
-// #define pinUltrasonEcho 13
+/// #define pinUltrasonTrig 12
+/// #define pinUltrasonEcho 13
 
 int botaoResetaAlarme = 0;
 int alarmeLigado = 0;
