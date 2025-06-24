@@ -29,7 +29,7 @@ Device deviceList[nArrayDispositivos] = {
     {4, 0, "Status Bomba Entrada", "img/Bomba_On.gif", "img/Bomba_Off.gif", 100, 100, "5px -3px", "bomba_entrada", "OUTPUT", true},
     {5, 0, "Status Bomba Saida", "img/Bomba_On.gif", "img/Bomba_Off.gif", 100, 100, "5px -3px", "bomba_saida", "OUTPUT", true},
     {2, 0, "Botao Reset", "", "", 0, 0, "", "botao_reset", "INPUT", false},
-    {16, 0, "Status do Sistema", "img/Alarme_On.gif", "img/Alarme_Off.gif", 100, 100, "11px 2px 3px 44px", "alarme_sistema", "OUTPUT", false}};
+    {16, 0, "Status do Sistema/Alarme", "img/Alarme_On.gif", "img/Alarme_Off.gif", 100, 100, "11px 2px 3px 44px", "alarme_sistema", "OUTPUT", false}};
 
 // Função para obter os dados dos dispositivos em formato JSON
 DynamicJsonDocument getDeviceData()

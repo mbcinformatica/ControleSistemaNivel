@@ -32,6 +32,8 @@ ESP8266WebServer server(80);
 #define pinBotaoResetAlarme 2
 #define pinBotaoLigaBombaSaida 15
 #define pinAlarmeNivelAlto 14
+// #define pinUltrasonTrig 12
+// #define pinUltrasonEcho 13
 
 int botaoResetaAlarme = 0;
 int alarmeLigado = 0;
@@ -268,6 +270,11 @@ void tratamentoSensorDispositivos()
     nivel = getAlturaNivel().toFloat();
     int bombaEntradaLigada = digitalRead(pinBombaEntrada);
     int bombaSaidaLigada = digitalRead(pinBombaSaida);
+    
+    Serial.println(nivel);
+    Serial.println(digitalRead(pinUltrasonTrig));
+    Serial.println(digitalRead(pinUltrasonEcho));
+
     if (nivel == 0)
     {
         zerarContadorNivel++;

@@ -84,6 +84,7 @@ if (!window.relhistdispsensController) {
 
             // Limpar o resultado anterior
             resultadoRelatorio.innerHTML = "";
+            navegacaoRelatorio.innerHTML = "";
 
             if (historico.length === 0) {
               resultadoRelatorio.innerHTML = "<p>Nenhum registro encontrado para o período informado.</p>";
@@ -98,19 +99,23 @@ if (!window.relhistdispsensController) {
 
             // Adicionar evento para exportar o relatório em PDF
             btnExportarPDF.onclick = function () {
-
               if (!window.jspdf) {
                 console.error("jsPDF não está disponível. Verifique se o arquivo foi carregado corretamente.");
                 return;
               }
-              
-              const { jsPDF } = window.jspdf;
-              const doc = new jsPDF({ orientation: "landscape" }); // A4 em paisagem
 
+              const { jsPDF } = window.jspdf;
+              const doc = new jsPDF({ orientation: "portrait", format: "a4" }); // A4 em retrato
+
+              const formatarDataHora = (dataHora) => {
+                const [data, hora] = dataHora.split(" ");
+                const [ano, mes, dia] = data.split("-");
+                return `${dia}/${mes}/${ano} ${hora}`;
+              };
+              
               // Configuração do título e período
               const titulo = "Relatório de Histórico de Dispositivos e Sensores";
-              const periodo = `Período: ${dataHoraInicial} a ${dataHoraFinal}`;
-
+              const periodo = `Período: ${formatarDataHora(dataHoraInicial)} a ${formatarDataHora(dataHoraFinal)}`;
               // Função para formatar a data no formato dd/mm/yyyy
               function formatarData(data) {
                 const [ano, mes, dia] = data.split("-");
@@ -120,9 +125,9 @@ if (!window.relhistdispsensController) {
               // Configuração da tabela
               const tabelaDados = historicoCompleto.map(item => [
                 formatarData(item.dateregister.split(" ")[0]) + " " + item.dateregister.split(" ")[1], // Data/Hora formatada
-                item.tipo,         // Tipo
-                item.nome,         // Nome
-                item.valor         // Valor
+                item.tipo, // Tipo
+                item.nome, // Nome
+                item.valor // Valor
               ]);
 
               // Cabeçalhos da tabela
@@ -132,10 +137,13 @@ if (!window.relhistdispsensController) {
               doc.autoTable({
                 head: [tabelaCabecalho],
                 body: tabelaDados,
-                startY: 30, // Posição inicial da tabela
+                startY: 20, // Posição inicial da tabela
                 styles: {
-                  fontSize: 10, // Tamanho da fonte
-                  cellPadding: 3, // Espaçamento interno das células
+                  font: "Arial",
+                  fontSize: 8, // Reduzido o tamanho da fonte para caber na página
+                  cellPadding: 2, // Reduzido o espaçamento interno das células
+                  overflow: "linebreak",
+                  valign: "middle",
                 },
                 headStyles: {
                   fillColor: [200, 200, 200], // Cor de fundo do cabeçalho
@@ -149,21 +157,23 @@ if (!window.relhistdispsensController) {
                   fillColor: [240, 240, 240], // Cor de fundo alternada para as linhas
                 },
                 columnStyles: {
-                  0: { cellWidth: 70 }, // Largura da coluna "Data/Hora"
-                  1: { cellWidth: 40 }, // Largura da coluna "Tipo"
-                  2: { cellWidth: 100 }, // Largura da coluna "Nome"
-                  3: { cellWidth: 40 }, // Largura da coluna "Valor"
+                  0: { cellWidth: 40 }, // Largura da coluna "Data/Hora"
+                  1: { cellWidth: 30 }, // Largura da coluna "Tipo"
+                  2: { cellWidth: 70 }, // Largura da coluna "Nome"
+                  3: { cellWidth: 30 }, // Largura da coluna "Valor"
                 },
                 didDrawPage: function (data) {
-                  // Adiciona o título no topo de cada página
-                  doc.setFontSize(14);
-                  doc.text(titulo, 10, 10);
-
-                  // Adiciona o período no topo de cada página
+                  // Adiciona o título e o período no topo
+                  doc.setFont("Arial", "bold");
                   doc.setFontSize(12);
-                  doc.text(periodo, 10, 20);
+                  doc.text(titulo, 10, 10);
+                  doc.text(periodo, 10, 15);
+                  // Adiciona o número da página no rodapé
+                  const pageCount = doc.internal.getNumberOfPages();
+                  doc.setFontSize(10);
+                  doc.text(`Página ${pageCount}`, doc.internal.pageSize.width - 20, doc.internal.pageSize.height - 10);
                 },
-                margin: { top: 30 }, // Ajusta a margem superior para o cabeçalho
+                margin: { top: 20, left: 10, right: 10 }, // Ajusta as margens para caber na página
               });
 
               // Salva o PDF com o nome especificado
@@ -173,6 +183,7 @@ if (!window.relhistdispsensController) {
           .catch(error => {
             console.error("Erro ao buscar o relatório:", error);
             resultadoRelatorio.innerHTML = `<p>Erro ao buscar o relatório: ${error.message}</p>`;
+            navegacaoRelatorio.innerHTML = ""; // Limpar navegação em caso de erro
             btnExportarPDF.style.display = "none";
           });
       });
@@ -223,41 +234,61 @@ if (!window.relhistdispsensController) {
       function atualizarNavegacao() {
         const totalPaginas = Math.ceil(historicoCompleto.length / itensPorPagina);
         navegacaoRelatorio.innerHTML = "";
-      
+
         if (totalPaginas <= 1) return;
-      
-        // Exibir o contador de página
-        const contadorPagina = document.createElement("span");
-        contadorPagina.textContent = `Página ${paginaAtual}/${totalPaginas}`;
-        contadorPagina.style.marginRight = "20px";
-        contadorPagina.style.color = "white";
-        contadorPagina.style.fontWeight = "bold";
-        navegacaoRelatorio.appendChild(contadorPagina);
-      
+
+        // Criar um contêiner para os botões e o contador
+        const navegacaoContainer = document.createElement("div");
+        navegacaoContainer.style.display = "flex";
+        navegacaoContainer.style.alignItems = "center";
+        navegacaoContainer.style.justifyContent = "space-between"; // Botões à esquerda, contador à direita
+        navegacaoContainer.style.marginTop = "10px";
+
+        // Contêiner para os botões
+        const botoesContainer = document.createElement("div");
+        botoesContainer.style.display = "flex";
+        botoesContainer.style.gap = "10px"; // Espaçamento entre os botões
+
         // Botão "Anterior"
         if (paginaAtual > 1) {
           const btnAnterior = document.createElement("button");
           btnAnterior.textContent = "Anterior";
-          btnAnterior.style.marginRight = "10px";
+          btnAnterior.style.marginLeft = "10px";
           btnAnterior.onclick = () => {
             paginaAtual--;
             atualizarTabela();
           };
-          navegacaoRelatorio.appendChild(btnAnterior);
+          botoesContainer.appendChild(btnAnterior);
         }
-      
+
         // Botão "Próximo"
         if (paginaAtual < totalPaginas) {
           const btnProximo = document.createElement("button");
           btnProximo.textContent = "Próximo";
+          btnProximo.style.marginRight = "auto";
           btnProximo.onclick = () => {
             paginaAtual++;
             atualizarTabela();
           };
-          navegacaoRelatorio.appendChild(btnProximo);
+          botoesContainer.appendChild(btnProximo);
         }
+
+        // Adicionar os botões ao contêiner de navegação
+        navegacaoContainer.appendChild(botoesContainer);
+
+        // Exibir o contador de página
+        const contadorPagina = document.createElement("span");
+        contadorPagina.textContent = `Página ${paginaAtual}/${totalPaginas}`;
+        contadorPagina.style.color = "white";
+        contadorPagina.style.fontWeight = "bold";
+        contadorPagina.style.display = "contents";
+
+        // Adicionar o contador ao contêiner de navegação
+        navegacaoContainer.appendChild(contadorPagina);
+
+        // Adicionar o contêiner ao elemento de navegação
+        navegacaoRelatorio.appendChild(navegacaoContainer);
       }
-      
     }
   };
 
